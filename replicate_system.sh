@@ -18,7 +18,7 @@ mkdir -p dir_name && git clone -C dir_name repoa
 dir_name link_to_repo
 THOUGHT
 
-system_map_dir="~/.afkanerd/config"
+system_map_dir="$HOME/.afkanerd/config"
 system_map_file="${system_map_dir}/system_map.sh"
 
 reset_default() {
@@ -45,12 +45,13 @@ elif [ "$1" == "ap" ] ; then
 	if [ ! -f "$system_map_file" ] ; then
 		echo "system not initialized, run \"init\" to create files"
 	else
+		#check to make sure second arg has been passed
 		echo "mkdir -p $(pwd) && git clone $2" >> ${system_map_file} 
 		echo "directory added to system mapping"
 	fi
 
 else
-	echo $1
-	mkdir -p /home/sherlock/Desktop/14-04-2019 && git clone afkanerd.com
+	#first check if it's initialized
+	./${system_map_file}
 fi
 #mkdir -p /home/sherlock/Desktop/14-04-2019 && git clone ap
