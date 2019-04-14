@@ -23,7 +23,7 @@ system_map_file="${system_map_dir}/system_map.sh"
 
 reset_default() {
 	mkdir -p ${system_map_dir}
-	echo "#!/bin/bash\n\n" >> ${system_map_file}
+	echo -e "#!/bin/bash\n\n" >> ${system_map_file}
 	chmod +x ${system_map_file}
 	echo "initialization complete, system file created!"
 }
@@ -39,6 +39,7 @@ if [ "$1" == "init" ] ; then
 elif [ "$1" == "reset" ] ; then
 	#put test to verify you know what you are doing
 	echo "resetting structure to default"
+	rm -r ${system_map_file}
 	reset_default
 
 elif [ "$1" == "ap" ] ; then
@@ -46,12 +47,17 @@ elif [ "$1" == "ap" ] ; then
 		echo "system not initialized, run \"init\" to create files"
 	else
 		#check to make sure second arg has been passed
-		echo "mkdir -p $(pwd) && git clone $2" >> ${system_map_file} 
-		echo "directory added to system mapping"
+		#check if it's a git repo, or check of response from terminal command is empty
+		if [ git remote get-url --all origin ] ; then
+			echo "mkdir -p $(pwd) && git clone $(git remote get-url --all origin)" >> ${system_map_file} 
+			echo "directory added to system mapping"
+		else
+			echo "seems no git project is present here"
+		fi
 	fi
 
 else
 	#first check if it's initialized
-	./${system_map_file}
+	${system_map_file}
 fi
 #mkdir -p /home/sherlock/Desktop/14-04-2019 && git clone ap
