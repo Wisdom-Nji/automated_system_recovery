@@ -48,8 +48,11 @@ elif [ "$1" == "ap" ] ; then
 	else
 		#check to make sure second arg has been passed
 		#check if it's a git repo, or check of response from terminal command is empty
-		if [ git remote get-url --all origin ] ; then
-			echo "mkdir -p $(pwd) && git clone $(git remote get-url --all origin)" >> ${system_map_file} 
+		if [ $(git remote get-url --all origin) ] ; then
+			cd ..
+			current_dir="$(pwd)"
+			cd -
+			echo "mkdir -p ${current_dir} && git clone $(git remote get-url --all origin)" >> ${system_map_file} 
 			echo "directory added to system mapping"
 		else
 			echo "seems no git project is present here"
