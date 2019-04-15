@@ -51,6 +51,11 @@ elif [ "$1" == "ap" ] ; then
 		if [ $(git remote get-url --all origin) ] ; then
 			cd ..
 			current_dir="$(pwd)"
+			if [ $(pwd | grep $HOME) ] ; then
+				present_dir=$(pwd | grep -oP "$HOME\K.*")
+				echo "Present dir: ${present_dir}"
+				current_dir="\$HOME${present_dir}"
+			fi
 			cd -
 			echo "mkdir -p ${current_dir} && git clone $(git remote get-url --all origin)" >> ${system_map_file} 
 			echo "directory added to system mapping"
