@@ -53,7 +53,7 @@ elif [ "$1" == "ap" ] ; then
 			current_dir="$(pwd)"
 			if [ $(pwd | grep $HOME) ] ; then
 				present_dir=$(pwd | grep -oP "$HOME\K.*")
-				echo "Present dir: ${present_dir}"
+				#echo "Present dir: ${present_dir}"
 				current_dir="\$HOME${present_dir}"
 			fi
 			cd -
