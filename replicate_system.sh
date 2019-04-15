@@ -42,6 +42,14 @@ elif [ "$1" == "reset" ] ; then
 	rm -r ${system_map_file}
 	reset_default
 
+elif [ "$1" == "show" ] ; then
+	if [ ! -f "$system_map_file" ] ; then
+		echo "system not initialized, run \"init\" to create files"
+	else
+		echo -e "------------------[FILE: ${system_map_file}]------------"
+		cat ${system_map_file}
+	fi
+
 elif [ "$1" == "ap" ] ; then
 	if [ ! -f "$system_map_file" ] ; then
 		echo "system not initialized, run \"init\" to create files"
