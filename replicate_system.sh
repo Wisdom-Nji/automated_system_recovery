@@ -36,12 +36,17 @@ reset_default() {
 	echo -e "#!/bin/bash\n\n" > ${system_map_file}
 }
 
+recover_default() {
+	git -C ${system_map_dir} fetch --all
+	git -C ${system_map_dir} pull origin master
+}
 
 if [ "$1" == "init" ] ; then
 	if [ -f "$system_map_file" ] ; then
 		echo "system file already present, no need to re-init"
 	else
 		hard_reset_default
+		recover_default
 	fi
 
 elif [ "$1" == "reset" ] ; then
@@ -57,6 +62,10 @@ elif [ "$1" == "backup" ] ; then
 	git -C ${system_map_dir} add ${system_map_file}
 	git -C ${system_map_dir} commit -m "${todays_date}"
 	git -C ${system_map_dir} push origin master
+
+elif [ "$1" == "recover" ] ; then
+	git -C ${system_map_dir} fetch --all
+	git -C ${system_map_dir} pull origin master
 
 elif [ "$1" == "show" ] ; then
 	if [ ! -f "$system_map_file" ] ; then
