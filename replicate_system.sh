@@ -55,6 +55,7 @@ elif [ "$1" == "reset" ] ; then
 	reset_default
 	if [ -f "$system_map_file" ] ; then
 		reset_default
+	fi
 
 elif [ "$1" == "cleanse" ] ; then
 	echo "would not even ask if you are sure about this!"
