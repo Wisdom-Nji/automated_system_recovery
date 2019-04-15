@@ -38,7 +38,7 @@ reset_default() {
 
 recover_default() {
 	git -C ${system_map_dir} fetch --all
-	git -C ${system_map_dir} pull origin master
+	git -C ${system_map_dir} reset --hard origin/master
 }
 
 if [ "$1" == "init" ] ; then
@@ -53,6 +53,8 @@ elif [ "$1" == "reset" ] ; then
 	#put test to verify you know what you are doing
 	echo "resetting structure to default"
 	reset_default
+	if [ -f "$system_map_file" ] ; then
+		reset_default
 
 elif [ "$1" == "cleanse" ] ; then
 	echo "would not even ask if you are sure about this!"
@@ -62,10 +64,6 @@ elif [ "$1" == "backup" ] ; then
 	git -C ${system_map_dir} add ${system_map_file}
 	git -C ${system_map_dir} commit -m "${todays_date}"
 	git -C ${system_map_dir} push origin master
-
-elif [ "$1" == "recover" ] ; then
-	git -C ${system_map_dir} fetch --all
-	git -C ${system_map_dir} pull origin master
 
 elif [ "$1" == "show" ] ; then
 	if [ ! -f "$system_map_file" ] ; then
