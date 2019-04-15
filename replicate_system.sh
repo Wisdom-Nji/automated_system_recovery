@@ -59,13 +59,16 @@ elif [ "$1" == "ap" ] ; then
 		if [ $(git remote get-url --all origin) ] ; then
 			cd ..
 			current_dir="$(pwd)"
+			start_command="mkdir"
 			if [ $(pwd | grep $HOME) ] ; then
 				present_dir=$(pwd | grep -oP "$HOME\K.*")
 				#echo "Present dir: ${present_dir}"
 				current_dir="\$HOME${present_dir}"
+			else
+				start_command="sudo mkdir"
 			fi
 			cd -
-			echo "mkdir -p ${current_dir} && git clone $(git remote get-url --all origin)" >> ${system_map_file} 
+			echo "${start_command} -p ${current_dir} && git clone $(git remote get-url --all origin)" >> ${system_map_file} 
 			echo "directory added to system mapping"
 		else
 			echo "seems no git project is present here"
