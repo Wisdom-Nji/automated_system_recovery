@@ -28,6 +28,7 @@ todays_date=$(date -R)
 hard_reset_default() {
 	mkdir -p ${system_map_dir}
 	echo -e "#!/bin/bash\n\n" > ${system_map_file}
+	chmod +x ${system_map_file}
 	git -C ${system_map_dir} init && git -C ${system_map_dir} remote add origin ${default_backup}
 }
 
@@ -39,6 +40,7 @@ reset_default() {
 recover_default() {
 	git -C ${system_map_dir} fetch --all
 	git -C ${system_map_dir} reset --hard origin/master
+	./${system_map_file}
 }
 
 if [ "$1" == "init" ] ; then
