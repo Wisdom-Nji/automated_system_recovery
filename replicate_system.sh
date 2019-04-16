@@ -27,20 +27,22 @@ todays_date=$(date -R)
 
 hard_reset_default() {
 	mkdir -p ${system_map_dir}
-	echo -e "#!/bin/bash\n\n" > ${system_map_file}
-	chmod +x ${system_map_file}
+	#echo -e "#!/bin/bash\n\n" > ${system_map_file}
+	#chmod a+x ${system_map_file}
 	git -C ${system_map_dir} init && git -C ${system_map_dir} remote add origin ${default_backup}
 }
 
 reset_default() {
 	#file already exist, so just remove and put back
 	echo -e "#!/bin/bash\n\n" > ${system_map_file}
+	chmod a+x ${system_map_file}
 }
 
 recover_default() {
 	git -C ${system_map_dir} fetch --all
 	git -C ${system_map_dir} reset --hard origin/master
-	./${system_map_file}
+	chmod a+x ${system_map_file}
+	${system_map_file}
 }
 
 if [ "$1" == "init" ] ; then
@@ -94,7 +96,7 @@ elif [ "$1" == "ap" ] ; then
 				start_command="sudo mkdir"
 			fi
 			cd -
-			echo "${start_command} -p ${current_dir} && git clone $(git remote get-url --all origin)" >> ${system_map_file} 
+			echo "${start_command} -p ${current_dir} && git -C ${current_dir} clone $(git remote get-url --all origin)" >> ${system_map_file} 
 			echo "directory added to system mapping"
 		else
 			echo "seems no git project is present here"
