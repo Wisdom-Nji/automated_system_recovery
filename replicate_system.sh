@@ -78,7 +78,7 @@ elif [ "$1" == "show" ] ; then
 		cat ${system_map_file}
 	fi
 
-elif [ "$1" == "ap" ] ; then
+elif [ "$1" == "add" ] ; then
 	if [ ! -f "$system_map_file" ] ; then
 		echo "system not initialized, run \"init\" to create files"
 	else
