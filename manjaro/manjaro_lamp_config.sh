@@ -51,10 +51,7 @@ then
 	echo -e "Find the following line and uncomment it or add it if not exist: \n\tLoadModule mpm_prefork_module modules/mod_mpm_prefork.so\n"
 	read -n 1 -s -r -p "Press any key when ready..."
 	sudo vim /etc/httpd/conf/httpd.conf
-	sudo echo -e "\
-		LoadModule php7_module modules/libphp7.so\n\
-		AddHandler php7-script php\n\
-		Include conf/extra/php7_module.conf\n" >> /etc/httpd/conf/httpd.conf
+	sudo echo -e "LoadModule php_module modules/libphp.so\nAddHandler php-script php\nInclude conf/extra/php_module.conf\n" >> /etc/httpd/conf/httpd.conf
 	#could put some php test here... but why bother now lol
 	systemctl restart httpd
 else 
@@ -71,8 +68,7 @@ then
 	read -n 1 -s -r -p "Press any key when ready..."
 	sudo vim /etc/php/php.ini
 	echo -e "Creating the configuration file\n"
-	sudo echo -e "\
-		Alias /phpmyadmin \"/usr/share/webapps/phpMyAdmin\"\n\
+	sudo echo -e "Alias /phpmyadmin \"/usr/share/webapps/phpMyAdmin\"\n\
 		<Directory \"/usr/share/webapps/phpMyAdmin\">\n\
 		DirectoryIndex index.php\n\
 		AllowOverride All\n\
